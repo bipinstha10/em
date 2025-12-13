@@ -59,10 +59,10 @@ const userSchema = new Schema(
 // so instead we write function () {}
 // since it is a middleware, next is used to indicate to pass the flag after it's completion
 // process like encryption takes time so it is good to use async-await
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
   // this logic has been implemented to avoid the encryption in case of no change in password
   if (!this.isModified("password")) {
-    return next();
+    return;
   }
 
   this.password = await bcrypt.hash(this.password, 10);
